@@ -1,16 +1,39 @@
 ---
-
+// Home page with a link to the flight scanner
+import Layout from '../layouts/Layout.astro';
+const colors = {
+  skyBlue: "#8ECAE6",
+  deepBlue: "#219EBC",
+  accent: "#FFB703", 
+  earthTone: "#FB8500"
+};
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout title="AeroFlights - Home">
+  <div class="ghibli-clouds">
+    <div class="cloud" style="top: 10%; animation-duration: 35s;"></div>
+    <div class="cloud" style="top: 30%; animation-duration: 45s; animation-delay: 5s;"></div>
+    <div class="cloud" style="top: 50%; animation-duration: 40s; animation-delay: 10s;"></div>
+  </div>
+  
+  <main class="ghibli-sky-bg min-h-screen flex flex-col items-center justify-center px-4 py-8 text-center">
+    <h1 class="text-4xl text-white mb-4 text-shadow">Welcome to AeroFlights</h1>
+    <p class="text-white mb-8 max-w-lg">
+      Discover the perfect time for your next adventure in the sky. 
+      Our flight scanner helps you find available flights with the best prices
+      within your desired date range.
+    </p>
+    <a href="/flight-scanner" class="ghibli-button">
+      Try Our Flight Scanner
+      <svg xmlns="http://www.w3.org/2000/svg" class="inline ml-2" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+        <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+      </svg>
+    </a>
+  </main>
+
+  <style>
+    .text-shadow {
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+  </style>
+</Layout>

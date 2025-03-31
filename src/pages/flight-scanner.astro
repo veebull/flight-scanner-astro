@@ -1,0 +1,174 @@
+---
+// Flight Scanner Page with Ghibli-inspired styling
+import Layout from '../layouts/Layout.astro';
+
+// Remove the preact import since it's not available
+// import { useState } from 'preact/hooks';
+
+// Ghibli-inspired color palette
+const colors = {
+  skyBlue: "#8ECAE6",
+  deepBlue: "#219EBC",
+  accent: "#FFB703", 
+  earthTone: "#FB8500",
+  forestGreen: "#4D908E",
+  darkForest: "#277667",
+  sunset: "#F8961E"
+};
+
+// Mock flight dates data - in a real app this would come from an API
+const generateFlightDates = (startDate: Date, days: number, interval: number) => {
+  const dates = [];
+  for (let i = 0; i < days; i += interval) {
+    const date = new Date(startDate);
+    date.setDate(date.getDate() + i);
+    
+    // Add random prices to simulate real data
+    const basePrice = Math.floor(Math.random() * 200) + 100;
+    dates.push({
+      date: date.toISOString().split('T')[0],
+      available: Math.random() > 0.3, // 70% chance of being available
+      price: `$${basePrice}`
+    });
+  }
+  return dates;
+};
+
+// Generate dates for the next 60 days, every 1 day
+const today = new Date();
+const flightDates = generateFlightDates(today, 60, 1);
+---
+
+<Layout title="AeroFlights - Flight Scanner">
+  <div class="ghibli-clouds">
+    <div class="cloud" style="top: 10%; animation-duration: 35s;"></div>
+    <div class="cloud" style="top: 25%; animation-duration: 45s; animation-delay: 5s;"></div>
+    <div class="cloud" style="top: 40%; animation-duration: 40s; animation-delay: 10s;"></div>
+  </div>
+  
+  <div class="container mx-auto px-4 py-8">
+    <div class="ghibli-card p-8 my-12">
+      <h1 class="text-center mb-2">AeroFlights Scanner</h1>
+      <p class="text-center mb-8 text-dark-forest">Find the perfect time for your sky adventure</p>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div>
+          <label class="block text-sm font-medium mb-2">From</label>
+          <select class="ghibli-select w-full">
+            <option>Tokyo (TYO)</option>
+            <option>Kyoto (KYO)</option>
+            <option>Osaka (OSA)</option>
+            <option>New York (NYC)</option>
+            <option>Paris (PAR)</option>
+            <option>London (LON)</option>
+          </select>
+        </div>
+        
+        <div>
+          <label class="block text-sm font-medium mb-2">To</label>
+          <select class="ghibli-select w-full">
+            <option>Venice (VCE)</option>
+            <option>Amsterdam (AMS)</option>
+            <option>Copenhagen (CPH)</option>
+            <option>Dublin (DUB)</option>
+            <option>Barcelona (BCN)</option>
+            <option>Sydney (SYD)</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-sm font-medium mb-2">Departure Date</label>
+            <input type="date" class="ghibli-input w-full" min={today.toISOString().split('T')[0]} />
+          </div>
+          
+          <div>
+            <label class="block text-sm font-medium mb-2">Return Date</label>
+            <input type="date" class="ghibli-input w-full" min={today.toISOString().split('T')[0]} />
+          </div>
+        </div>
+      </div>
+      
+      <div class="flex justify-center mb-12">
+        <button class="ghibli-button text-lg">
+          <span class="mr-2">Find Flights</span>
+          <svg xmlns="http://www.w3.org/2000/svg" class="inline" viewBox="0 0 20 20" fill="currentColor" width="20" height="20">
+            <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+      
+      <h2 class="text-xl font-semibold mb-4 text-center">Available Dates</h2>
+      
+      <div class="date-grid">
+        {flightDates.map(flightDate => (
+          <div class={`ghibli-date-card p-4 ${flightDate.available ? 'available' : 'unavailable'}`}>
+            <div class="text-center">
+              <p class="text-lg font-bold">{new Date(flightDate.date).toLocaleDateString('en-US', {month: 'short', day: 'numeric'})}</p>
+              <p class="text-sm text-gray-600">{new Date(flightDate.date).toLocaleDateString('en-US', {weekday: 'short'})}</p>
+              <p class="mt-2 font-bold text-lg" style={`color: ${flightDate.available ? 'var(--earth-tone)' : 'gray'}`}>
+                {flightDate.available ? flightDate.price : 'Unavailable'}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+  
+  <style>
+    body {
+      background: linear-gradient(135deg, var(--sky-blue) 0%, var(--deep-blue) 100%);
+      min-height: 100vh;
+    }
+    
+    /* Date picker styling */
+    .date-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .available {
+      border-left: 4px solid var(--forest-green);
+    }
+    
+    .unavailable {
+      border-left: 4px solid #ccc;
+      opacity: 0.7;
+    }
+    
+    .ghibli-date-card {
+      background: white;
+      border-radius: 0.5rem;
+      overflow: hidden;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s;
+    }
+    
+    .ghibli-date-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+
+  <script>
+    // Client-side JavaScript for interactive elements
+    document.addEventListener('DOMContentLoaded', () => {
+      // Filter logic would go here
+      const dateCards = document.querySelectorAll('.ghibli-date-card');
+      dateCards.forEach(card => {
+        card.addEventListener('click', () => {
+          if (!card.classList.contains('unavailable')) {
+            dateCards.forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            // In a real app, you would update the departure/return date inputs
+          }
+        });
+      });
+    });
+  </script>
+</Layout> 

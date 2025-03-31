@@ -1,0 +1,190 @@
+/* 
+  Global CSS for AeroFlights with Ghibli-inspired styling
+  This contains shared styles and variables used across the site
+*/
+
+:root {
+  /* Ghibli-inspired color palette */
+  --sky-blue: #8ecae6;
+  --deep-blue: #219ebc;
+  --accent: #ffb703;
+  --earth-tone: #fb8500;
+  --forest-green: #4d908e;
+  --dark-forest: #277667;
+  --sunset: #f8961e;
+
+  /* Font settings */
+  --font-family: 'Helvetica', 'Arial', sans-serif;
+
+  /* Spacing */
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-xxl: 3rem;
+
+  /* Border radius */
+  --border-radius-sm: 0.25rem;
+  --border-radius-md: 0.5rem;
+  --border-radius-lg: 1rem;
+}
+
+/* Reset and base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Ghibli-inspired backgrounds */
+.ghibli-sky-bg {
+  background: linear-gradient(
+    135deg,
+    var(--sky-blue) 0%,
+    var(--deep-blue) 100%
+  );
+}
+
+/* Ghibli-inspired components */
+.ghibli-button {
+  background-color: var(--accent);
+  color: #333;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-weight: bold;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+  display: inline-block;
+}
+
+.ghibli-button:hover {
+  background-color: var(--earth-tone);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.ghibli-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ghibli-input,
+.ghibli-select {
+  border: 2px solid var(--sky-blue);
+  border-radius: var(--border-radius-md);
+  padding: 0.75rem 1rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  transition: all 0.2s;
+}
+
+.ghibli-input:focus,
+.ghibli-select:focus {
+  border-color: var(--deep-blue);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(33, 158, 188, 0.3);
+}
+
+.ghibli-card {
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: var(--border-radius-lg);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 6px 12px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(8px);
+}
+
+/* Clouds animation for sky background */
+.ghibli-clouds {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.cloud {
+  position: absolute;
+  width: 200px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 200px;
+  animation: float 30s infinite linear;
+}
+
+.cloud:before,
+.cloud:after {
+  content: '';
+  position: absolute;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+.cloud:before {
+  width: 100px;
+  height: 100px;
+  top: -50px;
+  left: 25px;
+}
+
+.cloud:after {
+  width: 120px;
+  height: 120px;
+  top: -70px;
+  right: 25px;
+}
+
+@keyframes float {
+  0% {
+    transform: translateX(-200px);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: bold;
+  line-height: 1.2;
+  margin-bottom: var(--spacing-md);
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: var(--deep-blue);
+}
+
+h2 {
+  font-size: 2rem;
+  color: var(--dark-forest);
+}
+
+p {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
